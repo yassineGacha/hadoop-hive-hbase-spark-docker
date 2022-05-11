@@ -8,4 +8,4 @@ for sfile in ${files}
 do 
     echo $sfile >> ./tar-source-files/file_list.txt
 done
-docker build --file ./Dockerfile_app --tag yassine/hadoop-hive-hbase-spark-docker:$version .
+docker build --file ./Dockerfile_app --tag DroneMOD/hadoop-hive-hbase-spark-docker:$version .
