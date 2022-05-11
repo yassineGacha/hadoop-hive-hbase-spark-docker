@@ -90,23 +90,7 @@ RUN if [ ! -f "${TEZ_PACKAGE}" ]; then curl --progress-bar -L --retry 3 \
   && chown -R root:root "${TEZ_HOME}" \
   && mkdir -p "${TEZ_HOME}/logs" 
 
-# Flink Package
-# 国内加速地址，注意版本不全
-# http://mirrors.aliyun.com/apache/flink/flink-${FLINK_VERSION}/flink-${FLINK_VERSION}-bin-scala_${FLINK_SCALA_VERSION}.tgz
-# 如果本地{USR_PROGRAM_DIR}/source_dir文件夹没有，则下载。
-RUN if [ ! -f "${FLINK_PACKAGE}" ] ; then curl --progress-bar -L --retry 3 \
-  "https://dlcdn.apache.org/flink/flink-${FLINK_VERSION}/flink-${FLINK_VERSION}-bin-scala_${FLINK_SCALA_VERSION}.tgz" -o "${USR_PROGRAM_DIR}/source_dir/${FLINK_PACKAGE}" ; fi \
-  && tar -xf "${USR_PROGRAM_DIR}/source_dir/${FLINK_PACKAGE}" -C "${USR_PROGRAM_DIR}/" \
-  && mv "${USR_PROGRAM_DIR}/flink-${FLINK_VERSION}" "${FLINK_HOME}" \
-  && mkdir -p "${FLINK_LOG_DIR}" \
-  && chown -R root:root "${FLINK_HOME}"
 
-# Flink 整合Hadoop
-# https://flink.apache.org/downloads.html --> Additional Components --> Pre-bundled Hadoop 2.8.3
-ENV FLINK_PRE_BUNDLED_HADOOP_JAR=flink-shaded-hadoop-2-uber-2.8.3-10.0.jar
-RUN if [ ! -f "${FLINK_PRE_BUNDLED_HADOOP_JAR}" ] ; then curl --progress-bar -L --retry 3 \
-  "https://repo.maven.apache.org/maven2/org/apache/flink/flink-shaded-hadoop-2-uber/2.8.3-10.0/${FLINK_PRE_BUNDLED_HADOOP_JAR}" -o "${FLINK_HOME}/lib/" ; \
-  else mv "${USR_PROGRAM_DIR}/source_dir/${FLINK_PRE_BUNDLED_HADOOP_JAR}" "${FLINK_HOME}/lib/"; fi
 
  
 # Zookeeper Package
@@ -220,13 +204,6 @@ COPY conf/hadoop/core-site.xml "${HBASE_CONF_DIR}"/
 COPY conf/hadoop/hdfs-site.xml "${HBASE_CONF_DIR}"/
 RUN echo "export JAVA_HOME=${JAVA_HOME}" >>  "${HBASE_CONF_DIR}/hbase-env.sh"
 
-# Flink setup
-COPY conf/flink/flink-conf.yaml "${FLINK_CONF_DIR}"/
-COPY conf/flink/masters "${FLINK_CONF_DIR}"/
-COPY conf/flink/workers "${FLINK_CONF_DIR}"/
-COPY conf/hadoop/core-site.xml "${FLINK_CONF_DIR}"/
-COPY conf/hadoop/hdfs-site.xml "${FLINK_CONF_DIR}"/
-COPY conf/hadoop/yarn-site.xml "${FLINK_CONF_DIR}"/
 
 # Trino setup
 COPY conf/trino/config.properties.coordinator "${TRINO_CONF_DIR}"/
