@@ -66,14 +66,7 @@ ENV SPARK_CONF_DIR="${SPARK_HOME}/conf"
 ENV SPARK_LOG_DIR="${SPARK_HOME}/logs"
 ENV SPARK_DIST_CLASSPATH="${HADOOP_CONF_DIR}:${HADOOP_HOME}/share/hadoop/tools/lib/*:${HADOOP_HOME}/share/hadoop/common/lib/*:${HADOOP_HOME}/share/hadoop/common/*:${HADOOP_HOME}/share/hadoop/hdfs:${HADOOP_HOME}/share/hadoop/hdfs/lib/*:${HADOOP_HOME}/share/hadoop/hdfs/*:${HADOOP_HOME}/share/hadoop/mapreduce/lib/*:${HADOOP_HOME}/share/hadoop/mapreduce/*:${HADOOP_HOME}/share/hadoop/yarn:${HADOOP_HOME}/share/hadoop/yarn/lib/*:${HADOOP_HOME}/share/hadoop/yarn/*"
 
-# FLINK
-ENV FLINK_VERSION=1.13.6
-ENV FLINK_SCALA_VERSION=2.12
-ENV FLINK_HOME=/usr/program/flink
-ENV FLINK_PACKAGE="flink-${FLINK_VERSION}-bin-scala_${FLINK_SCALA_VERSION}.tgz"
-ENV PATH="${PATH}:${FLINK_HOME}/bin"
-ENV FLINK_CONF_DIR="${FLINK_HOME}/conf"
-ENV FLINK_LOG_DIR="${FLINK_HOME}/logs"
+
 
 # Sqoop
 ENV SQOOP_VERSION=1.4.7
